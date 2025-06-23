@@ -19,4 +19,4 @@ jobs:
           cache: 'maven'
 
       - name: Run only custom tests
-        run: mvn -B test -Dtest=org.apache.bookkeeper.proto.checksum.DigestManagerTest
+        run: mvn -B test -Dtest=org.apache.bookkeeper.proto.checksum.DigestManagerTest test
