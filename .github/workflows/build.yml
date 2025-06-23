@@ -18,5 +18,5 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-          -name: Run only DigestManagerTest in bookkeeper-server
+          -name: Run DigestManagerTest from bookkeeper-server
           run: mvn -pl bookkeeper-server -Dtest=org.apache.bookkeeper.proto.checksum.DigestManagerTest test
