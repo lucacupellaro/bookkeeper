@@ -5,9 +5,7 @@ import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.buffer.Unpooled;
 import io.netty.util.ReferenceCounted;
 import org.apache.bookkeeper.client.BKException;
-import org.apache.bookkeeper.client.LedgerHandle;
 import org.apache.bookkeeper.util.ByteBufList;
-import org.checkerframework.checker.nullness.qual.AssertNonNullIfNonNull;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -63,9 +61,9 @@ public class DigestManagerTest {
     @Parameterized.Parameters(name = "#{index} - Digest: {3}, Entry: {4}, Flags: {5}, Content: \"{7}\", V2: {8}")
     public static Collection<Object[]> data() throws NoSuchAlgorithmException {
         return Arrays.asList(new Object[][] {
-                { 999L, 1L, "pwd".getBytes(), DigestType.HMAC, 100L, 255, new byte[0], "short", true,0l },
-                { 999L, 1L, "pwd".getBytes(), DigestType.HMAC, 100L, 255, new byte[0], "short", false,1l }, // failure?
-                { -5L, 999L, "!@#".getBytes(), DigestType.CRC32C, 100L, 1, new byte[] { -1, -1 }, "A", false,12l },
+                { 999L, 1L, "pwd".getBytes(), DigestType.HMAC, 100L, 255,  DigestManager.generateMasterKey("sdgds".getBytes()), "short", true,0l },
+                { 999L, 1L, "pwd".getBytes(), DigestType.HMAC, 100L, 255,  DigestManager.generateMasterKey("pwsdfsdd".getBytes()), "short", false,1l }, // failure?
+                { -5L, 999L, "!@#".getBytes(), DigestType.CRC32C, 100L, 1,  DigestManager.generateMasterKey("pwvdvxdd".getBytes()), "A", false,12l },
                 { 101L, 1L, "secret".getBytes(), DigestType.CRC32, 100L, 0,
                         DigestManager.generateMasterKey("secret".getBytes()), "entry", true,Long.MAX_VALUE },
         });

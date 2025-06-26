@@ -285,6 +285,11 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <trimStackTrace>false</trimStackTrace>
+
+          <!-- AGGIUNTA IMPORTANTE per JaCoCo -->
+          <!--suppress UnresolvedMavenProperty -->
+          <argLine>${argLine}</argLine>
+
           <properties>
             <property>
               <name>listener</name>
@@ -293,6 +298,7 @@
           </properties>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -336,6 +342,35 @@
       <id>tls-certs</id>
       <build>
         <plugins>
+
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.8</version>
+            <executions>
+              <!-- 1. Attiva JaCoCo prima dei test -->
+              <execution>
+                <id>prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+              <!-- 2. Genera il report HTML dopo i test -->
+              <execution>
+                <id>report</id>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+                <configuration>
+                  <!-- Solo la tua classe -->
+                  <includes>
+                    <include>org/apache/bookkeeper/proto/checksum/DigestManager*</include>
+                  </includes>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
