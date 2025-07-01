@@ -105,7 +105,6 @@ public abstract class DigestManager {
     public static byte[] generateMasterKey(byte[] password) throws NoSuchAlgorithmException {
         return password.length > 0 ? MacDigestManager.genDigest("ledger", password) : MacDigestManager.EMPTY_LEDGER_KEY;
     }
-
     /**
      * Computes the digest for an entry and put bytes together for sending.
      *
